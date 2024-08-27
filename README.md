@@ -12,6 +12,7 @@ use {
     config = function()
         require('brainrot').setup({
             auto_start = true  -- Set to false if you don't want the video to start automatically
+            split_width = 50 -- optional
         })
     end
 }

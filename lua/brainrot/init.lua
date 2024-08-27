@@ -2,6 +2,7 @@ local M = {}
 
 M.config = {
 	auto_start = false,
+	split_width = 50,
 }
 
 function M.setup(opts)
@@ -19,9 +20,11 @@ end
 function M.start()
 	vim.cmd("botright vnew")
 
-	vim.cmd("vertical resize 50")
+	vim.cmd("vertical resize" .. M.config.split_width)
 
-	vim.cmd("setlocal nonumber no relativenumber signcolumn=no")
+	vim.wo.number = false
+	vim.wo.relativenumber = false
+	vim.wo.signcolumn = "no"
 
 	local plugin_path = debug.getinfo(1, "S").source:sub(2):match("(.*/)"):sub(1, -6)
 

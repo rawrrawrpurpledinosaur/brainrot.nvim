@@ -1,8 +1,9 @@
 local M = {}
 
--- Function to play the video
+-- Function to play the video within a Neovim buffer
 function M.play_video()
-	vim.fn.jobstart({ "mpv", "--no-terminal", "--fullscreen", "brainrot.mp4" }, { detach = true })
+	-- Open a new terminal buffer and play the video using mpv's --vo=tct
+	vim.cmd("new | term mpv --vo=tct --really-quiet brainrot.mp4")
 end
 
 -- Setup function for user options

@@ -22,9 +22,11 @@ function M.start()
 
 	vim.cmd("vertical resize" .. M.config.split_width)
 
-	vim.wo.number = false
-	vim.wo.relativenumber = false
-	vim.wo.signcolumn = "no"
+	local buf = vim.api.nvim_get_current_buf()
+
+	vim.api.nvim_buf_set_option(buf, "number", false)
+	vim.api.nvim_buf_set_option(buf, "relativenumber", false)
+	vim.api.nvim_buf_set_option(buf, "signcolumn", "no")
 
 	local plugin_path = debug.getinfo(1, "S").source:sub(2):match("(.*/)"):sub(1, -6)
 

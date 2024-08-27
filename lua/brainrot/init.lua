@@ -2,11 +2,16 @@ local M = {}
 
 M.config = {
 	auto_start = false,
+	video_source = nil,
 	split_width = 50,
 }
 
 function M.setup(opts)
-	M.config = vim.tbl_extend("force", M.config, opts or {})
+	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
+
+	if not M.config.video_source then
+		error("brainrot.nvim: You must specify a video_source in the setup function")
+	end
 
 	if M.config.auto_start then
 		vim.api.nvim_create_autocmd("VimEnter", {
@@ -18,21 +23,20 @@ function M.setup(opts)
 end
 
 function M.start()
+	-- Create a new split on the right
 	vim.cmd("botright vnew")
 
-	vim.cmd("vertical resize" .. M.config.split_width)
+	-- Set the width of the new split
+	vim.cmd("vertical resize " .. M.config.split_width)
 
-	local buf = vim.api.nvim_get_current_buf()
-
+	-- Disable line numbers and other UI elements in the new buffer
 	vim.wo.number = false
 	vim.wo.relativenumber = false
 	vim.wo.signcolumn = "no"
 
-	local plugin_path = debug.getinfo(1, "S").source:sub(2):match("(.*/)"):sub(1, -6)
-
-	local video_path = plugin_path .. "../brainrot.mp4"
-
-	vim.fn.termopen("mpv --loop" .. video_path)
+	-- Use a terminal to play the video
+	local video_source = M.config.video_source
+	vim.fn.termopen("mpv --loop " .. video_source)
 end
 
 return M

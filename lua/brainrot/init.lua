@@ -24,13 +24,13 @@ function M.start()
 
 	local buf = vim.api.nvim_get_current_buf()
 
-	vim.api.nvim_buf_set_option(buf, "number", false)
-	vim.api.nvim_buf_set_option(buf, "relativenumber", false)
-	vim.api.nvim_buf_set_option(buf, "signcolumn", "no")
+	vim.wo.number = false
+	vim.wo.relativenumber = false
+	vim.wo.signcolumn = "no"
 
 	local plugin_path = debug.getinfo(1, "S").source:sub(2):match("(.*/)"):sub(1, -6)
 
-	local video_path = plugin_path .. "brainrot.mp4"
+	local video_path = plugin_path .. "../brainrot.mp4"
 
 	vim.fn.termopen("mpv --loop" .. video_path)
 end
